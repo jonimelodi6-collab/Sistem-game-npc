@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<title>NPC Dialog Universal Prototipe v1</title>
+<style>
+body{background:#1a1a2e;color:white;font‑family:Arial;padding:15px}
+#kotakChat{height:320px;overflow:auto;background:#16213e;padding:12px;border‑radius:10px;margin‑bottom:12px}
+.pemain{color:#77ddff}
+.npc{color:#ffdd77}
+#inputTeks{width:72%;padding:8px}
+#kirimBtn{width:22%;padding:8px}
+</style>
+</head>
+<body>
+<h3>🤺 Penjaga Desa</h3>
+<div id="kotakChat"></div>
+<input id="inputTeks" placeholder="Ketik bicara ke NPC disini…">
+<button id="kirimBtn">KIRIM</button>
+
+<script>
+// 🟢 KONFIGURASI (Nanti dipindah ke JSON di versi selanjutnya)
+const dataNPC = {
+  nama: "Penjaga Desa",
+  sifat: "sedikit pemarah tapi baik hati",
+  jawaban:{
+    lokasiPedang:[
+      "Hmph, pedangmu ada dekat jembatan timur, cepatlah kesana!",
+      "Aku sibuk jaga desa, tapi ya sudah, pedangmu jatuh di dekat jembatan timur sana.",
+      "Kenapa baru cari sekarang? Pedangmu ada di jembatan sebelah timur desa!"
+    ],
+    tanyaUlangPedang:[
+      "Aku sudah bilang tadi! Di jembatan timur sana!",
+      "Hei aku sudah jawab tadi, pedangmu ada di jembatan timur!",
+      "Aduh kenapa tanya terus? Langsung pergi ke jembatan timur!"
+    ],
+    salam:[
+      "Ada apa kamu? Jangan banyak ganggu tugasku!",
+      "Ya? Ada yang bisa aku bantu?",
+      "Halo, apa yang mau kamu tanyakan?"
+    ],
+    tidakTahu:[
+      "Maaf aku tidak paham ucapanmu, tanyakan hal seputar desa saja.",
+      "Aku tidak tahu hal itu, coba tanya hal lain tentang desa."
+    ]
+  }
+}
+// Memori + penghitung tanya pedang
+let riwayat = [];
+let hitungTanyaPedang = 0;
+const kotakChat = document.getElementById("kotakChat");
+const inputTeks = document.getElementById("inputTeks");
+
+function tampilPesan(teks, tipe){
+  const p = document.createElement("div");
+  p.className = tipe;
+  p.innerText = tipe==="pemain"?"KAMU: "+teks:dataNPC.nama+": "+teks;
+  kotakChat.appendChild(p);
+  kotakChat.scrollTop = kotakChat.scrollHeight;
+}
+
+function dapatJawaban(kalimat){
+  const teks = kalimat.toLowerCase();
+  riwayat.push(kalimat);
+  let jawaban;
+  if(teks.includes("pedang")||teks.includes("dimana pedang")){
+    hitungTanyaPedang++;
+    if(hitungTanyaPedang > 1){
+      jawaban = dataNPC.jawaban.tanyaUlangPedang[Math.floor(Math.random()*dataNPC.jawaban.tanyaUlangPedang.length)]
+    }else{
+      jawaban = dataNPC.jawaban.lokasiPedang[Math.floor(Math.random()*dataNPC.jawaban.lokasiPedang.length)]
+    }
+  }else if(teks.includes("halo")||teks.includes("hai")||teks.includes("assalamualaikum")){
+    jawaban = dataNPC.jawaban.salam[Math.floor(Math.random()*dataNPC.jawaban.salam.length)]
+  }else{
+    jawaban = dataNPC.jawaban.tidakTahu[Math.floor(Math.random()*dataNPC.jawaban.tidakTahu.length)]
+  }
+  return jawaban;
+}
+
+// Tombol kirim
+document.getElementById("kirimBtn").onclick = ()=>{
+  const pesanPemain = inputTeks.value.trim();
+  if(!pesanPemain) return;
+  tampilPesan(pesanPemain, "pemain");
+  const balasanNPC = dapatJawaban(pesanPemain);
+  setTimeout(()=>tampilPesan(balasanNPC, "npc"),700)
+  inputTeks.value = "";
+}
+</script>
+</body>
+</html>
+
