@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF‑8">
-<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
-<title>NPC Dialog Universal Prototipe v1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPC Dialog Universal Prototipe v1</title>
 <style>
-body{background:#1a1a2e;color:white;font‑family:Arial;padding:15px}
-#kotakChat{height:320px;overflow:auto;background:#16213e;padding:12px;border‑radius:10px;margin‑bottom:12px}
+body{background:#1a1a2e;color:white;font-family:Arial;padding:15px}
+#kotakChat{height:320px;overflow:auto;background:#16213e;padding:12px;border-radius:10px;margin-bottom:12px}
 .pemain{color:#77ddff}
 .npc{color:#ffdd77}
 #inputTeks{width:72%;padding:8px}
@@ -16,11 +16,11 @@ body{background:#1a1a2e;color:white;font‑family:Arial;padding:15px}
 <body>
 <h3>🤺 Penjaga Desa</h3>
 <div id="kotakChat"></div>
-<input id="inputTeks" placeholder="Ketik bicara ke NPC disini…">
+<input id="inputTeks" placeholder="Ketik bicara ke NPC disini...">
 <button id="kirimBtn">KIRIM</button>
 
 <script>
-// 🟢 KONFIGURASI (Nanti dipindah ke JSON di versi selanjutnya)
+// KONFIGURASI
 const dataNPC = {
   nama: "Penjaga Desa",
   sifat: "sedikit pemarah tapi baik hati",
@@ -48,7 +48,7 @@ const dataNPC = {
 }
 // Memori + penghitung tanya pedang
 let riwayat = [];
-let hitungTanyaPedang = 0;
+let hitungTanyaPedang = 0;
 const kotakChat = document.getElementById("kotakChat");
 const inputTeks = document.getElementById("inputTeks");
 
@@ -66,7 +66,7 @@ function dapatJawaban(kalimat){
   let jawaban;
   if(teks.includes("pedang")||teks.includes("dimana pedang")){
     hitungTanyaPedang++;
-    if(hitungTanyaPedang > 1){
+    if(hitungTanyaPedang > 1){
       jawaban = dataNPC.jawaban.tanyaUlangPedang[Math.floor(Math.random()*dataNPC.jawaban.tanyaUlangPedang.length)]
     }else{
       jawaban = dataNPC.jawaban.lokasiPedang[Math.floor(Math.random()*dataNPC.jawaban.lokasiPedang.length)]
@@ -91,4 +91,3 @@ document.getElementById("kirimBtn").onclick = ()=>{
 </script>
 </body>
 </html>
-
