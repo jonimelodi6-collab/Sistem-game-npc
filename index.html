@@ -20,7 +20,6 @@ body{background:#1a1a2e;color:white;font-family:Arial;padding:15px}
 <button id="kirimBtn">KIRIM</button>
 
 <script>
-// KONFIGURASI
 const dataNPC = {
   nama: "Penjaga Desa",
   sifat: "sedikit pemarah tapi baik hati",
@@ -46,7 +45,6 @@ const dataNPC = {
     ]
   }
 }
-// Memori + penghitung tanya pedang
 let riwayat = [];
 let hitungTanyaPedang = 0;
 const kotakChat = document.getElementById("kotakChat");
@@ -79,7 +77,6 @@ function dapatJawaban(kalimat){
   return jawaban;
 }
 
-// Tombol kirim
 document.getElementById("kirimBtn").onclick = ()=>{
   const pesanPemain = inputTeks.value.trim();
   if(!pesanPemain) return;
